@@ -3,7 +3,7 @@
 \alias{reset.options}
 \alias{reset.options.default}
 \alias{reset.options.character}
-\title{ The futile options subsystem}
+\title{ Futile options management }
 \description{
   Included as part of futile is an options subsystem that facilitates the
   management of options for a particular application. The options.manager
@@ -23,7 +23,7 @@ options.manager(option.name, defaults = NULL)
 }
 \details{
   Using the options subsystem is simple. The first step is to create a specific
-  options manager for a given namespace by using the options.manager function.
+  options manager for a given namespace by using the 'options.manager' function.
   It is possible to specify some default values by passing a list to the default
   argument. This function returns a specialized function for managing options in
   the given namespace.
@@ -31,10 +31,17 @@ options.manager(option.name, defaults = NULL)
   With the new function, options can be set and accessed in an isolated 
   namespace. The options can also be reset using reset.options to the default
   values.
+
+  Note that if multiple values are accessed, to support lists and other complex
+  data structures, the output is a list. If a vector is preferred, pass
+  simplify=TRUE as an argument to the user-defined options management function.
+
+  To reset options back to default settings, use the reset.options function. 
 }
 \value{
-  The options.manager function produces a function to manage options for the
-  specified namespace.
+  The 'options.manager' function produces a custom function to manage options 
+  for the specified namespace. Use this function to access and set options in
+  your code.
 }
 \author{ Brian Lee Yung Rowe }
 \examples{

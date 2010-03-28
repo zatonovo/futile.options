@@ -6,9 +6,9 @@
 #  reset.options(log.options, c=29)
 #  log.options()
 # Generates a function to retrieve options for a given name
-options.manager <- function(option.name, defaults=NULL, simplify=FALSE)
+options.manager <- function(option.name, defaults=NULL)
 {
-  function(...)
+  function(..., simplify=FALSE)
   {
     os <- getOption(option.name)
     if (is.null(os))
