@@ -31,7 +31,8 @@ options.manager <- function(option.name, defaults=NULL)
       ns <- sapply(args, '[')
       ns <- ns[ns %in% names(os)]
       if (length(ns) == 0) return(NULL)
-      return(sapply(os[ns], '['), simplify=simplify)
+      if (length(ns) == 1) return(os[[ns]])
+      return(sapply(os[ns], '[', simplify=simplify))
     }
 
     # Setter
