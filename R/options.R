@@ -6,7 +6,7 @@
 #  reset.options(log.options, c=29)
 #  log.options()
 # Generates a function to retrieve options for a given name
-options.manager <- function(option.name, defaults=NULL)
+options.manager <- function(option.name, defaults=NULL, simplify=FALSE)
 {
   function(...)
   {
@@ -31,7 +31,7 @@ options.manager <- function(option.name, defaults=NULL)
       ns <- sapply(args, '[')
       ns <- ns[ns %in% names(os)]
       if (length(ns) == 0) return(NULL)
-      return(sapply(os[ns], '['))
+      return(sapply(os[ns], '['), simplify=simplify)
     }
 
     # Setter
