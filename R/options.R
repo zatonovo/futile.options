@@ -1,14 +1,17 @@
+# Passing the update argument to the resulting options manager will update
+# the provided keys and values. Note that update[[1]] are the keys and 
+# update[[2]] are the values.
 # Examples of using options.manager
 #  log.options <- options.manager('log.options', defaults=list(logger='ROOT'))
 #  log.options(a=123, b=6234)
 #  log.options()
 #  log.options(a=123, b=6234)
-#  reset.options(log.options, c=29)
+#  resetOptions(log.options, c=29)
 #  log.options()
 # Generates a function to retrieve options for a given name
-options.manager <- function(option.name, defaults=NULL)
+OptionsManager <- function(option.name, defaults=NULL)
 {
-  function(..., simplify=FALSE)
+  function(..., simplify=FALSE, update=list())
   {
     os <- getOption(option.name)
     if (is.null(os))
@@ -23,6 +26,8 @@ options.manager <- function(option.name, defaults=NULL)
     }
 
     args <- list(...)
+    if (length(update) > 0)
+      invisible(updateOptions(option.name, update[[1]], update[[2]]))
     if (length(args) == 0) return(os)
 
     # Getter
@@ -37,6 +42,10 @@ options.manager <- function(option.name, defaults=NULL)
 
     # Setter
     for (x in names(args)) os[[x]] <- args[[x]]
+
+    # Updater - This is different from the setter as we need a mechanism for
+    # dynamicallyl setting key names
+    
     my.options <- list()
     my.options[[option.name]] <- os
     options(my.options)
@@ -46,11 +55,11 @@ options.manager <- function(option.name, defaults=NULL)
 }
 
 # Reset options for a given option set
-reset.options <- function(option.name, ...) UseMethod('reset.options')
-reset.options.default <- function(option.name, ...)
-  reset.options.character(deparse(substitute(option.name)), ...)
+resetOptions <- function(option.name, ...) UseMethod('resetOptions')
+resetOptions.default <- function(option.name, ...)
+  resetOptions.character(deparse(substitute(option.name)), ...)
 
-reset.options.character <- function(option.name, ...)
+resetOptions.character <- function(option.name, ...)
 {
   my.options <- list()
   my.options[[option.name]] <- NA
@@ -71,11 +80,22 @@ reset.options.character <- function(option.name, ...)
 }
 
 # Update a specific option in an option set (a generated function)
-update.options <- function(option.name, ...) UseMethod('update.options')
-update.options.default <- function(option.name, ...)
-  update.options.character(deparse(substitute(option.name)), ...)
+# This is primarily used when dynamic creation of options variables are needed.
+updateOptions <- function(option.name, ...) UseMethod('updateOptions')
+updateOptions.default <- function(option.name, ...)
+  updateOptions.character(deparse(substitute(option.name)), ...)
 
-update.options.character <- function(option.name, key, value)
+updateOptions.character <- function(option.name, key, value, ...)
 {
+  os <- getOption(option.name)
+  if (is.null(os))
+    stop(paste("Cannot update non-existent options:",option.name))
 
+  for (idx in 1:length(key)) os[[key[idx]]] <- value[[idx]]
+  my.options <- list()
+  my.options[[option.name]] <- os
+  options(my.options)
+
+  invisible()
 }
+

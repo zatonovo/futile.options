@@ -26,7 +26,7 @@ LazyLoad: \tab yes\cr
   a user's code depends. These types of errors are difficult to detect and
   should be avoided. Using 'futile.options' addresses this problem by properly
   scoping variables within its own custom 'namespace'. This is handled by the
-  'options.manager', which acts as a generator for functions that manage user-
+  'OptionsManager', which acts as a generator for functions that manage user-
   defined options. 
 
   An added benefit to the package is that default values are automatically
@@ -38,9 +38,9 @@ Brian Lee Yung Rowe <r@nurometic.com>
 \keyword{ package }
 \keyword{ attribute }
 \keyword{ logic }
-\seealso{ \code{\link{options.manager}} }
+\seealso{ \code{\link{OptionsManager}} }
 \examples{
-  my.options <- options.manager('my.options', defaults=list(a=1,b=2))
+  my.options <- OptionsManager('my.options', defaults=list(a=1,b=2))
   my.options(a=5, c=3)
   my.options('a')
 }
