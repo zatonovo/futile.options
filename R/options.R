@@ -69,3 +69,13 @@ reset.options.character <- function(option.name, ...)
   }
   invisible()
 }
+
+# Update a specific option in an option set (a generated function)
+update.options <- function(option.name, ...) UseMethod('update.options')
+update.options.default <- function(option.name, ...)
+  update.options.character(deparse(substitute(option.name)), ...)
+
+update.options.character <- function(option.name, key, value)
+{
+
+}
