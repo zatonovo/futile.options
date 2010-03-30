@@ -13,16 +13,26 @@ OptionsManager <- function(option.name, defaults=NULL)
 {
   function(..., simplify=FALSE, update=list())
   {
+    # Define a function to update options
+    up <- function(os)
+    {
+      my.options <- list()
+      my.options[[option.name]] <- os
+      options(my.options)
+    }
+
     os <- getOption(option.name)
     if (is.null(os))
     {
       if (is.null(defaults)) os <- list() else os <- defaults
+      up(os)
     }
     # This is here because there seem to be some issues with lazy evaluation
     # (maybe there is none in R?)
     else if (length(os) == 1 & any(is.na(os)) )
     {
       if (is.null(defaults)) os <- list() else os <- defaults
+      up(os)
     }
 
     args <- list(...)
@@ -42,14 +52,7 @@ OptionsManager <- function(option.name, defaults=NULL)
 
     # Setter
     for (x in names(args)) os[[x]] <- args[[x]]
-
-    # Updater - This is different from the setter as we need a mechanism for
-    # dynamicallyl setting key names
-    
-    my.options <- list()
-    my.options[[option.name]] <- os
-    options(my.options)
-
+    up(os)
     invisible()
   }
 }
