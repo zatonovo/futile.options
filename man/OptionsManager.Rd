@@ -17,7 +17,7 @@
   also provides default settings that can be restored by calling reset.options.
 }
 \usage{
-OptionsManager(option.name, defaults = NULL)
+OptionsManager(option.name, defaults = list())
 \method{resetOptions}{default}(option.name, ...)
 \method{resetOptions}{character}(option.name, ...)
 \method{updateOptions}{default}(option.name, ...)

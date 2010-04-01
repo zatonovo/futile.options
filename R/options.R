@@ -9,29 +9,24 @@
 #  resetOptions(log.options, c=29)
 #  log.options()
 # Generates a function to retrieve options for a given name
-OptionsManager <- function(option.name, defaults=NULL)
+OptionsManager <- function(option.name, defaults=list())
 {
+  # Define a function to update options
+  up <- function(os)
+  {
+    my.options <- list()
+    my.options[[option.name]] <- os
+    options(my.options)
+  }
+
+  up(list())
+
   function(..., simplify=FALSE, update=list())
   {
-    # Define a function to update options
-    up <- function(os)
-    {
-      my.options <- list()
-      my.options[[option.name]] <- os
-      options(my.options)
-    }
-
     os <- getOption(option.name)
-    if (is.null(os))
+    if (length(os) < 1)
     {
-      if (is.null(defaults)) os <- list() else os <- defaults
-      up(os)
-    }
-    # This is here because there seem to be some issues with lazy evaluation
-    # (maybe there is none in R?)
-    else if (length(os) == 1 & any(is.na(os)) )
-    {
-      if (is.null(defaults)) os <- list() else os <- defaults
+      os <- defaults
       up(os)
     }
 
@@ -94,7 +89,10 @@ updateOptions.character <- function(option.name, key, value, ...)
   if (is.null(os))
     stop(paste("Cannot update non-existent options:",option.name))
 
-  for (idx in 1:length(key)) os[[key[idx]]] <- value[[idx]]
+  if (length(key) == 1)
+    os[[key]] <- value
+  else
+    for (idx in 1:length(key)) os[[key[idx]]] <- value[idx]
   my.options <- list()
   my.options[[option.name]] <- os
   options(my.options)
