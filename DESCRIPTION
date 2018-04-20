@@ -1,8 +1,8 @@
 Package: futile.options
 Type: Package
 Title: Futile Options Management
-Version: 1.0.0
-Date: 2010-04-06
+Version: 1.0.1
+Date: 2018-04-20
 Author: Brian Lee Yung Rowe
 Maintainer: Brian Lee Yung Rowe <r@zatonovo.com>
 Depends: R (>= 2.8.0)
