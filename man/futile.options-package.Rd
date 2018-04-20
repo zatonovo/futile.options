@@ -9,15 +9,14 @@
   The 'futile.options' subsystem provides an easy user-defined options 
   management system that is properly scoped. This means that options created
   via 'futile.options' are fully self-contained and will not collide with 
-  options defined in other packages. This package is a self-contained package
-  within the futile suite of libraries.
+  options defined in other packages. 
 }
 \details{
 \tabular{ll}{
 Package: \tab futile.options\cr
 Type: \tab Package\cr
-Version: \tab {version}\cr
-Date: \tab {date}\cr
+Version: \tab 1.0.0\cr
+Date: \tab 2010-04-06\cr
 License: \tab LGPL-3\cr
 LazyLoad: \tab yes\cr
 }
@@ -33,7 +32,7 @@ LazyLoad: \tab yes\cr
   supported in the creation of the bespoke options manager.
 }
 \author{
-Brian Lee Yung Rowe <r@nurometic.com>
+Brian Lee Yung Rowe <r@zatonovo.com>
 }
 \keyword{ package }
 \keyword{ attribute }

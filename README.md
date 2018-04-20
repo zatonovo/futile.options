@@ -26,8 +26,6 @@ Example
  reset.options(my.options)
  my.options('c')
 
-For more information, see
-  http://nurometic.com/quantitative-finance/futile/options
 
 Author
 ======
